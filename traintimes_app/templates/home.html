@@ -4,8 +4,11 @@ Departures - {{ station }}
 {% endblock %}
 {% block content %}
 {% include "_station_select.html" %}
-<span class="station">{{ station }}</span>
-{% if "@Uid" in stationdata.services %}
+<span class="station">Departures from {{ station }}</span>
+{% if stationdata.services == None %}
+        <p>No trains are scheduled to depart from {{ station }} in the next 90 minutes.</p>
+{% else %}
+    {% if "@Uid" in stationdata.services %}
     {# 
         Got to account for Translink data stupidity, so if there's only one service...do this 
     #}
@@ -13,7 +16,7 @@ Departures - {{ station }}
         {% if departure.ServiceType["@Type"] != "Terminating" %}
             {% include "_departures_table.html" %}
         {% endif %}
-{% else %}
+    {% else %}
     {# 
         As above - if there are multiple services (more likely) do this 
     #}
@@ -24,6 +27,7 @@ Departures - {{ station }}
             {% endif %}
         {% endif %}
     {% endfor %}
+    {% endif %}
 {% endif %}
 
 

@@ -19,7 +19,7 @@ def home(station_name=None):
     form = StationSelectForm()
     stationdata = None
     form.station_select.choices = ["--Select Station--"]
-    form.station_select.choices.extend(list(station_codes().keys()))
+    form.station_select.choices.extend(sorted(list(station_codes().keys())))
     if form.validate_on_submit():
         if form.station_select.data == "--Select Station--":
             pass  # Do nothing on purpose

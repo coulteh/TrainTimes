@@ -18,7 +18,10 @@ class LiveTrainData:
         except Exception:
             # TODO: Handle this at some point
             pass
-        self.services = xml_data["Service"]
+        try:
+            self.services = xml_data["Service"]
+        except KeyError:
+            self.services = None
         self.station_name = xml_data["@name"]
 
 
