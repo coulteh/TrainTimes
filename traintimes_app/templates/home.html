@@ -8,13 +8,14 @@ Departures - {{ station }}
 {% if stationdata.services == None %}
         <p>No trains are scheduled to depart from {{ station }} in the next 90 minutes.</p>
 {% else %}
+    {% include "_departures_table_head.html" %}
     {% if "@Uid" in stationdata.services %}
     {# 
         Got to account for Translink data stupidity, so if there's only one service...do this 
     #}
     {% set departure = stationdata.services %}
         {% if departure.ServiceType["@Type"] != "Terminating" %}
-            {% include "_departures_table.html" %}
+            {% include "_departures_table_body.html" %}
         {% endif %}
     {% else %}
     {# 
@@ -23,11 +24,12 @@ Departures - {{ station }}
     {% for departure in stationdata.services %}
         {% if departure.ServiceType %}
             {% if departure.ServiceType["@Type"] != "Terminating" %}
-                {% include "_departures_table.html" %}
+                {% include "_departures_table_body.html" %}
             {% endif %}
         {% endif %}
     {% endfor %}
     {% endif %}
+    {% include "_departures_table_foot.html" %}
 {% endif %}
 
 
