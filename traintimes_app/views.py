@@ -1,5 +1,6 @@
+import os
 import urllib
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import babel
 import flask_babel
@@ -8,7 +9,7 @@ from flask import Flask, redirect, render_template, url_for
 
 from . import app
 from .datasets import station_codes, station_traffic_data
-from .fetch_data import fetch_live_data
+from .fetch_data import fetch_live_data, fetch_station_data
 from .forms import StationSelectForm
 
 
@@ -46,17 +47,6 @@ def contact():
     return render_template("contact.html")
 
 
-@app.route("/hello/")
-@app.route("/hello/<name>")
-def hello_there(name=None):
-    return render_template("hello_there.html", name=name, date=datetime.now())
-
-
-@app.route("/api/data")
-def get_data():
-    return app.send_static_file("data.json")
-
-
 @app.template_filter()
 def get_year(value):
     return babel.dates.format_datetime(value, "yyyy")
@@ -65,3 +55,19 @@ def get_year(value):
 @app.context_processor
 def inject_datetime():
     return dict(inject_datetime=datetime.now())
+
+
+@app.before_first_request
+def cache_station_data():
+    """Check the cached station data. If it's more than 4 weeks old, update it."""
+    data_dir = os.path.join(os.path.dirname(__file__), "data")
+    for filename in os.listdir(data_dir):
+        if filename.endswith(".json"):
+            modtime = os.path.getmtime(
+                os.path.join(data_dir, filename)
+            )  # Get the last time the file was modified.
+            diff = (
+                datetime.now() - timedelta(days=28)
+            ).timestamp()  # Get the timestamp for 28 days ago
+            if modtime < diff:
+                fetch_station_data()
