@@ -1,0 +1,28 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "Station": "BELFAST - EUROPA\/GVS", "ID": 19, "Type": "I", "Type~Def": "", "Easting": 333444, "Northing": 373777 }, "geometry": { "type": "Point", "coordinates": [ -5.936227183139368, 54.59460202166057 ] } },
+{ "type": "Feature", "properties": { "Station": "BELFAST - BOTANIC RAIL STATION", "ID": 15, "Type": "R", "Type~Def": "", "Easting": 333670, "Northing": 373093 }, "geometry": { "type": "Point", "coordinates": [ -5.933051794724724, 54.58840042790338 ] } },
+{ "type": "Feature", "properties": { "Station": "BELFAST - CENTRAL RAIL STATION", "ID": 17, "Type": "R", "Type~Def": "", "Easting": 334663, "Northing": 373896 }, "geometry": { "type": "Point", "coordinates": [ -5.917326566898931, 54.595352649366696 ] } },
+{ "type": "Feature", "properties": { "Station": "BELFAST - SYDENHAM RAIL HALT", "ID": 20, "Type": "R", "Type~Def": "", "Easting": 336625, "Northing": 375090 }, "geometry": { "type": "Point", "coordinates": [ -5.886439028702296, 54.605537720156981 ] } },
+{ "type": "Feature", "properties": { "Station": "BELFAST - YORKGATE RAIL STATION", "ID": 21, "Type": "R", "Type~Def": "", "Easting": 334254, "Northing": 375736 }, "geometry": { "type": "Point", "coordinates": [ -5.922814691623527, 54.611976420205103 ] } },
+{ "type": "Feature", "properties": { "Station": "JORDANSTOWN RAIL STATION", "ID": 49, "Type": "R", "Type~Def": "", "Easting": 335802, "Northing": 384164 }, "geometry": { "type": "Point", "coordinates": [ -5.894967168344472, 54.68721683702762 ] } },
+{ "type": "Feature", "properties": { "Station": "GREENISLAND RAIL STATION", "ID": 45, "Type": "R", "Type~Def": "", "Easting": 337168, "Northing": 385650 }, "geometry": { "type": "Point", "coordinates": [ -5.873094731082326, 54.70018846574613 ] } },
+{ "type": "Feature", "properties": { "Station": "CARRICKFERGUS RAIL STATION", "ID": 25, "Type": "R", "Type~Def": "", "Easting": 341200, "Northing": 387704 }, "geometry": { "type": "Point", "coordinates": [ -5.809609668439881, 54.717515822070965 ] } },
+{ "type": "Feature", "properties": { "Station": "LARNE RAIL STATION", "ID": 56, "Type": "R", "Type~Def": "", "Easting": 340460, "Northing": 402499 }, "geometry": { "type": "Point", "coordinates": [ -5.813936189365245, 54.850527978444788 ] } },
+{ "type": "Feature", "properties": { "Station": "LARNE HARBOUR RAIL STATION", "ID": 55, "Type": "R", "Type~Def": "", "Easting": 341523, "Northing": 402231 }, "geometry": { "type": "Point", "coordinates": [ -5.797531331822039, 54.847823386414149 ] } },
+{ "type": "Feature", "properties": { "Station": "BANGOR BUS & RAIL", "ID": 11, "Type": "I", "Type~Def": "", "Easting": 350263, "Northing": 381415 }, "geometry": { "type": "Point", "coordinates": [ -5.67233441339497, 54.658445008252173 ] } },
+{ "type": "Feature", "properties": { "Station": "LISBURN RAIL STATION", "ID": 59, "Type": "R", "Type~Def": "", "Easting": 326581, "Northing": 364591 }, "geometry": { "type": "Point", "coordinates": [ -6.046294892245204, 54.513899573620968 ] } },
+{ "type": "Feature", "properties": { "Station": "LURGAN RAIL STATION", "ID": 60, "Type": "R", "Type~Def": "", "Easting": 307838, "Northing": 358928 }, "geometry": { "type": "Point", "coordinates": [ -6.337609305646997, 54.467371367003025 ] } },
+{ "type": "Feature", "properties": { "Station": "PORTADOWN RAIL STATION", "ID": 71, "Type": "R", "Type~Def": "", "Easting": 301113, "Northing": 354192 }, "geometry": { "type": "Point", "coordinates": [ -6.446703260046651, 54.424243847705533 ] } },
+{ "type": "Feature", "properties": { "Station": "NEWRY RAIL STATION", "ID": 68, "Type": "R", "Type~Def": "", "Easting": 306933, "Northing": 327830 }, "geometry": { "type": "Point", "coordinates": [ -6.362697315051867, 54.188309109888834 ] } },
+{ "type": "Feature", "properties": { "Station": "ANTRIM RAIL STATION", "ID": 2, "Type": "R", "Type~Def": "", "Easting": 315325, "Northing": 386992 }, "geometry": { "type": "Point", "coordinates": [ -6.211776460602847, 54.718225694394327 ] } },
+{ "type": "Feature", "properties": { "Station": "BALLYMENA RAIL STATION", "ID": 8, "Type": "R", "Type~Def": "", "Easting": 310166, "Northing": 403192 }, "geometry": { "type": "Point", "coordinates": [ -6.284553111947311, 54.864071097291664 ] } },
+{ "type": "Feature", "properties": { "Station": "BALLYMONEY RAIL STATION", "ID": 9, "Type": "R", "Type~Def": "NIR ST", "Easting": 294987, "Northing": 425348 }, "geometry": { "type": "Point", "coordinates": [ -6.514032122259221, 55.066372035221299 ] } },
+{ "type": "Feature", "properties": { "Station": "COLERAINE BUS & RAIL", "ID": 28, "Type": "I", "Type~Def": "STATION", "Easting": 285370, "Northing": 432601 }, "geometry": { "type": "Point", "coordinates": [ -6.662339033628505, 55.133245883454187 ] } },
+{ "type": "Feature", "properties": { "Station": "PORTRUSH RAIL STATION", "ID": 72, "Type": "R", "Type~Def": "NIR ST", "Easting": 285768, "Northing": 440418 }, "geometry": { "type": "Point", "coordinates": [ -6.653730060307277, 55.203371473170066 ] } },
+{ "type": "Feature", "properties": { "Station": "L'DERRY RAIL STATION", "ID": 52, "Type": "R", "Type~Def": "NIR ST", "Easting": 243932, "Northing": 416219 }, "geometry": { "type": "Point", "coordinates": [ -7.31445795622723, 54.991512851522636 ] } }
+]
+}

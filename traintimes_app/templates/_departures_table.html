@@ -1,0 +1,15 @@
+<table>
+    <thead>
+        <th>Time</th>
+        <th>Destination</th>
+        <th>Expected Departure</th>
+        <th>Delay</th>
+    </thead>
+    <tr>
+        <td>{{ departure.DepartTime["@time"] }}</td>
+        <td>{{ departure.Destination1["@name"] }}</td>
+        <td>{{ departure.ExpectedDepartTime["@time"] }}</td>
+        <td>{{ departure.Delay["@Minutes"] }} mins</td>
+    </tr>
+
+</table>
