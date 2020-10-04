@@ -12,12 +12,6 @@ Departures - {{ station }}
     {% set departure = stationdata.services %}
         {% if departure.ServiceType["@Type"] != "Terminating" %}
             {% include "_departures_table.html" %}
-            {% set uid = departure["@Uid"] %}
-            {% set buttonuid = uid ~ "button" %}
-            Calling at: <input type="button" id={{ buttonuid }} class="button" onclick='hideElement("{{ uid }}");showHideValue("{{ buttonuid }}")' value="Show"></input>
-            <div id={{ uid }} style="display: none;">
-                {% include "_calling_stations.html" %}
-            </div>
         {% endif %}
 {% else %}
     {# 
@@ -27,12 +21,6 @@ Departures - {{ station }}
         {% if departure.ServiceType %}
             {% if departure.ServiceType["@Type"] != "Terminating" %}
                 {% include "_departures_table.html" %}
-                {% set uid = departure["@Uid"] %}
-                {% set buttonuid = uid ~ "button" %}
-                Calling at: <input type="button" id={{ buttonuid }} class="button" onclick='hideElement("{{ uid }}");showHideValue("{{ buttonuid }}")' value="Show"></input>
-                <div id={{ uid }} style="display: none;">
-                    {% include "_calling_stations.html" %}
-                </div>
             {% endif %}
         {% endif %}
     {% endfor %}
