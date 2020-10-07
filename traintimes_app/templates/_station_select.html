@@ -1,7 +1,7 @@
 <form action="" method="POST" onchange="submit()" novalidate>
     {{ form.hidden_tag()}}
     <p>
-        {{ form.station_select() }}
+        {{ form.station_select(class="form-control") }}
     </p>
     <noscript><input type="submit" value="Submit"></noscript>
 </form>
