@@ -14,27 +14,41 @@ from .forms import StationSelectForm
 
 
 @app.route("/", methods=["GET", "POST"])
-@app.route("/<station_name>", methods=["GET", "POST"])
+# @app.route("/<station_name>", methods=["GET", "POST"])
 def home(station_name=None):
-    form = StationSelectForm()
-    stationdata = None
-    form.station_select.choices = ["--Select Station--"]
-    form.station_select.choices.extend(sorted(list(station_codes().keys())))
-    if form.validate_on_submit():
-        if form.station_select.data == "--Select Station--":
-            pass  # Do nothing on purpose
-        else:
-            return redirect(url_for("home", station_name=form.station_select.data))
+    return render_template("home.html")
+    # form = StationSelectForm()
+    # stationdata = None
+    # form.station_select.choices = ["--Select Station--"]
+    # form.station_select.choices.extend(sorted(list(station_codes().keys())))
+    # if form.validate_on_submit():
+    #     if form.station_select.data == "--Select Station--":
+    #         pass  # Do nothing on purpose
+    #     else:
+    #         return redirect(url_for("home", station_name=form.station_select.data))
 
-    if station_name not in list(station_codes().keys()):
-        station = "Select a station to see departures."
+    # if station_name not in list(station_codes().keys()):
+    #     station = "Select a station to see departures."
+    # else:
+    #     stationdata = fetch_live_data(station_name)
+    #     form.station_select.default = station_name
+    #     station = stationdata.station_name
+    # return render_template(
+    #     "home.html", station=station, form=form, stationdata=stationdata
+    # )
+
+
+@app.route("/departures")
+@app.route("/departures/<station_name>")
+def departures(station_name=None):
+    if station_name not in station_codes().keys():
+        return redirect(url_for("home"))
     else:
+        form = StationSelectForm()
         stationdata = fetch_live_data(station_name)
-        form.station_select.default = station_name
-        station = stationdata.station_name
-    return render_template(
-        "home.html", station=station, form=form, stationdata=stationdata
-    )
+        return render_template(
+            "departures.html", station=station_name, form=form, stationdata=stationdata
+        )
 
 
 @app.route("/about/")
@@ -55,6 +69,11 @@ def get_year(value):
 @app.context_processor
 def inject_datetime():
     return dict(inject_datetime=datetime.now())
+
+
+@app.context_processor
+def station_list():
+    return {"station_list": station_codes()}
 
 
 @app.before_first_request

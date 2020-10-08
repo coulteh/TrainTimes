@@ -5,3 +5,5 @@ A stupid Flask web app that's meant to be a more clear way to check the train ti
 This is purely a learning project for me, and it's almost certainly terrible. One day I might host an "official" version.
 
 Uses the Translink Open Data from https://www.opendatani.gov.uk/
+Images from Twemoji: https://twemoji.twitter.com/
+CSS by Bootstrap: https://getbootstrap.com/

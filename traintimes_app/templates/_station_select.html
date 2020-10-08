@@ -1,7 +1,5 @@
-<form action="" method="POST" onchange="submit()" novalidate>
-    {{ form.hidden_tag()}}
-    <p>
-        {{ form.station_select(class="form-control") }}
-    </p>
-    <noscript><input type="submit" value="Submit"></noscript>
-</form>
+<div class="list-group">
+    {% for station in station_list.keys() %}
+            <a href={{ url_for("departures", station_name=station) }} class="list-group-item list-group-item-action text-center">{{ station }}</a>
+    {% endfor %}
+</div>
