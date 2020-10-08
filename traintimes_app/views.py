@@ -1,5 +1,6 @@
 import os
 import urllib
+from collections import OrderedDict
 from datetime import datetime, timedelta
 
 import babel
@@ -17,25 +18,6 @@ from .forms import StationSelectForm
 # @app.route("/<station_name>", methods=["GET", "POST"])
 def home(station_name=None):
     return render_template("home.html")
-    # form = StationSelectForm()
-    # stationdata = None
-    # form.station_select.choices = ["--Select Station--"]
-    # form.station_select.choices.extend(sorted(list(station_codes().keys())))
-    # if form.validate_on_submit():
-    #     if form.station_select.data == "--Select Station--":
-    #         pass  # Do nothing on purpose
-    #     else:
-    #         return redirect(url_for("home", station_name=form.station_select.data))
-
-    # if station_name not in list(station_codes().keys()):
-    #     station = "Select a station to see departures."
-    # else:
-    #     stationdata = fetch_live_data(station_name)
-    #     form.station_select.default = station_name
-    #     station = stationdata.station_name
-    # return render_template(
-    #     "home.html", station=station, form=form, stationdata=stationdata
-    # )
 
 
 @app.route("/departures")
@@ -78,7 +60,7 @@ def station_list():
 
 @app.before_first_request
 def cache_station_data():
-    """Check the cached station data. If it's more than 4 weeks old, update it."""
+    """Check the cached station data. If any of it's more than 4 weeks old, update it."""
     data_dir = os.path.join(os.path.dirname(__file__), "data")
     for filename in os.listdir(data_dir):
         if filename.endswith(".json"):

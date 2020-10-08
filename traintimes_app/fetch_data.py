@@ -1,5 +1,6 @@
 import os
 import urllib
+from collections import OrderedDict
 
 import requests
 import xmltodict
@@ -8,20 +9,32 @@ from .datasets import station_datasets, station_traffic_data
 
 
 class LiveTrainData:
-    def __init__(self, station_name):
-        xml_data = None
+    def __get_data(self, station_name):
         try:
             with urllib.request.urlopen(
                 station_traffic_data()[station_name]
             ) as raw_data:
-                xml_data = xmltodict.parse(raw_data.read())["StationBoard"]
-        except Exception:
-            # TODO: Handle this at some point
-            pass
+                return xmltodict.parse(raw_data.read())["StationBoard"]
+        except urllib.error.URLError:
+            return None
+
+    def __normalise_services(self, xml_data):
+        service_list = None
         try:
-            self.services = xml_data["Service"]
+            service_list = xml_data["Service"]
         except KeyError:
-            self.services = None
+            return None
+        if "@Uid" in service_list:
+            temp = service_list
+            service_list = OrderedDict()
+            service_list[0] = temp
+            return service_list
+        else:
+            return service_list
+
+    def __init__(self, station_name):
+        xml_data = self.__get_data(station_name)
+        self.services = self.__normalise_services(xml_data)
         self.station_name = xml_data["@name"]
 
 

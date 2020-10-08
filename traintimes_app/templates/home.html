@@ -6,5 +6,9 @@ NI Train Times
 <h1 class="text-center">
     <small>Select a station</small>
 </h1>
-{% include "_station_select.html" %}
+<div class="list-group">
+    {% for station in station_list.keys() %}
+            <a href={{ url_for("departures", station_name=station) }} class="list-group-item list-group-item-action text-center">{{ station }}</a>
+    {% endfor %}
+</div>
 {% endblock %}
