@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block title %}
+Departures - {{ station }}
+{% endblock %}
+{% block content %}
+<h1 class="text-center">
+    <small>{{ station }}</small>
+</h1>
+<ul class="nav nav-tabs nav-fill" id="departuresArrivalsTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="departures-tab" data-toggle="tab" href="#departures" role="tab" aria-controls="departures" aria-selected="true">Departures</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="arrivals-tab" data-toggle="tab" href="#arrivals" role="tab" aria-controls="arrivals" aria-selected="false">Arrivals</a>
+    </li>
+    </ul>
+    <div class="tab-content" id="departuresArrivalsTabContent">
+        <div class="tab-pane fade show active" id="departures" role="tabpanel" aria-labelledby="departures-tab">
+            {% if stationdata.services == None %}
+                <p>No trains are scheduled to depart from {{ station }} in the next 90 minutes.</p>
+            {% else %}
+                {% include "_departures_table_head.html" %}
+                {% if "@Uid" in stationdata.services %}
+                {# 
+                    Got to account for Translink data stupidity, so if there's only one service...do this 
+                #}
+                {% set departure = stationdata.services %}
+                    {% if departure.ServiceType["@Type"] != "Terminating" %}
+                        {% include "_departures_table_body.html" %}
+                    {% endif %}
+                {% else %}
+                {# 
+                    As above - if there are multiple services (more likely) do this 
+                #}
+                {% for departure in stationdata.services %}
+                    {% if departure.ServiceType %}
+                        {% if departure.ServiceType["@Type"] != "Terminating" %}
+                            {% include "_departures_table_body.html" %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% include "_departures_table_foot.html" %}
+            {% endif %}
+        </div>
+        <div class="tab-pane fade" id="arrivals" role="tabpanel" aria-labelledby="arrivals-tab">
+            This feature has not been implemented yet.
+        </div>
+    </div>
+
+
+
+<script>
+    function hideElement(element) {
+        var x = document.getElementById(element);
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+
+    function showHideValue(element) {
+        var x = document.getElementById(element)
+        if (x.value=="Show") x.value = "Hide";
+        else x.value = "Show";
+    }
+</script>
+
+{% endblock %}

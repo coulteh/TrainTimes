@@ -10,26 +10,43 @@ from flask import Flask, redirect, render_template, url_for
 
 from . import app
 from .datasets import station_codes, station_traffic_data
-from .fetch_data import fetch_live_data, fetch_station_data
+from .fetch_data import fetch_live_data
 from .forms import StationSelectForm
+from .utils import fetch_station_data
 
 
 @app.route("/", methods=["GET", "POST"])
-# @app.route("/<station_name>", methods=["GET", "POST"])
 def home(station_name=None):
     return render_template("home.html")
 
 
-@app.route("/departures")
-@app.route("/departures/<station_name>")
-def departures(station_name=None):
+@app.route("/station")
+@app.route("/station/<station_name>")
+def station(station_name=None):
+    has_arrivals = False
+    has_departures = False
     if station_name not in station_codes().keys():
         return redirect(url_for("home"))
     else:
-        form = StationSelectForm()
         stationdata = fetch_live_data(station_name)
+        if stationdata.all_services == None:
+            has_arrivals = False
+            has_departures = False
+        else:
+            for service in stationdata.all_services:
+                if service["ServiceType"]["@Type"] == "Originating":
+                    has_departures = True
+                elif service["ServiceType"]["@Type"] == "Terminating":
+                    has_arrivals = True
+                elif service["ServiceType"]["@Type"] == "Through":
+                    has_arrivals = True
+                    has_departures = True
         return render_template(
-            "departures.html", station=station_name, form=form, stationdata=stationdata
+            "stations.html",
+            station=station_name,
+            stationdata=stationdata,
+            has_arrivals=has_arrivals,
+            has_departures=has_departures,
         )
 
 
@@ -60,10 +77,12 @@ def station_list():
 
 @app.before_first_request
 def cache_station_data():
-    """Check the cached station data. If any of it's more than 4 weeks old, update it."""
+    """Check the cached station data. If any of it's more than 4 weeks old, or missing, update it."""
     data_dir = os.path.join(os.path.dirname(__file__), "data")
+    json_files_exist = False
     for filename in os.listdir(data_dir):
         if filename.endswith(".json"):
+            json_files_exist = True
             modtime = os.path.getmtime(
                 os.path.join(data_dir, filename)
             )  # Get the last time the file was modified.
@@ -72,3 +91,5 @@ def cache_station_data():
             ).timestamp()  # Get the timestamp for 28 days ago
             if modtime < diff:
                 fetch_station_data()
+    if json_files_exist == False:
+        fetch_station_data()

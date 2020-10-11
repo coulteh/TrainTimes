@@ -8,7 +8,7 @@ NI Train Times
 </h1>
 <div class="list-group">
     {% for station in station_list.keys() %}
-            <a href={{ url_for("departures", station_name=station) }} class="list-group-item list-group-item-action text-center">{{ station }}</a>
+            <a href={{ url_for("station", station_name=station) }} class="list-group-item list-group-item-action text-center">{{ station }}</a>
     {% endfor %}
 </div>
 {% endblock %}

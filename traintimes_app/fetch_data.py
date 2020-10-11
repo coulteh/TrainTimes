@@ -5,10 +5,10 @@ from collections import OrderedDict
 import requests
 import xmltodict
 
-from .datasets import station_datasets, station_traffic_data
+from .datasets import station_traffic_data
 
 
-class LiveTrainData:
+class LiveStationData:
     def __get_data(self, station_name):
         try:
             with urllib.request.urlopen(
@@ -26,7 +26,7 @@ class LiveTrainData:
             return None
         if "@Uid" in service_list:
             temp = service_list
-            service_list = OrderedDict()
+            service_list = []
             service_list[0] = temp
             return service_list
         else:
@@ -34,31 +34,26 @@ class LiveTrainData:
 
     def __init__(self, station_name):
         xml_data = self.__get_data(station_name)
-        self.services = self.__normalise_services(xml_data)
+        self.all_services = self.__normalise_services(xml_data)
         self.station_name = xml_data["@name"]
+
+    class Service:
+        """
+        An instance of a service at a station
+        """
+
+        def __init__(self, train):
+            self.type = train["ServiceType"]["@Type"]
+            self.arr_time = None
+            self.dep_time = None
+            self.exp_arr_time = None
+            self.exp_dep_time = None
+            self.platform = None
+            self.status = None
+            self.delay = None
+            self.last_report = None
+            self.calling_points = None
 
 
 def fetch_live_data(station_name):
-    return LiveTrainData(station_name)
-
-
-def fetch_station_data():
-    for key, value in station_datasets.items():
-        r = requests.get(value)
-
-        dirname = os.path.dirname(__file__)
-        tmp_filename = key + ".tmp.json"
-        fin_filename = key + ".json"
-        tmp_path = os.path.join(dirname, "data", tmp_filename)
-        fin_path = os.path.join(dirname, "data", fin_filename)
-
-        for item in {tmp_path, fin_path}:
-            try:
-                os.remove(item)
-            except FileNotFoundError:
-                pass
-
-        with open(os.path.join(tmp_path), "w") as f:
-            f.write(r.text)
-
-        os.rename(tmp_path, fin_path)
+    return LiveStationData(station_name)

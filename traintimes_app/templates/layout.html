@@ -33,7 +33,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {% for key in station_list.keys() %}
-                                    <a href={{ url_for("departures", station_name=key) }} class="dropdown-item">{{ key }}</a>
+                                    <a href={{ url_for("station", station_name=key) }} class="dropdown-item">{{ key }}</a>
                                 {% endfor %}
                                 
                             </div>
