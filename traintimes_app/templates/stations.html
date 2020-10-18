@@ -16,7 +16,7 @@ Departures - {{ station }}
     </ul>
     <div class="tab-content" id="departuresArrivalsTabContent">
         <div class="tab-pane fade show active" id="departures" role="tabpanel" aria-labelledby="departures-tab">
-            {% if stationdata.services == None %}
+            {% if stationdata.all_services == None %}
                 <p>No trains are scheduled to depart from {{ station }} in the next 90 minutes.</p>
             {% else %}
                 {% include "_departures_table_head.html" %}
@@ -24,7 +24,7 @@ Departures - {{ station }}
                 {# 
                     Got to account for Translink data stupidity, so if there's only one service...do this 
                 #}
-                {% set departure = stationdata.services %}
+                {% set departure = stationdata.all_services %}
                     {% if departure.ServiceType["@Type"] != "Terminating" %}
                         {% include "_departures_table_body.html" %}
                     {% endif %}
@@ -32,7 +32,7 @@ Departures - {{ station }}
                 {# 
                     As above - if there are multiple services (more likely) do this 
                 #}
-                {% for departure in stationdata.services %}
+                {% for departure in stationdata.all_services %}
                     {% if departure.ServiceType %}
                         {% if departure.ServiceType["@Type"] != "Terminating" %}
                             {% include "_departures_table_body.html" %}

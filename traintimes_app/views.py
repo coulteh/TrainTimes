@@ -34,11 +34,11 @@ def station(station_name=None):
             has_departures = False
         else:
             for service in stationdata.all_services:
-                if service["ServiceType"]["@Type"] == "Originating":
+                if service.type == "Originating":
                     has_departures = True
-                elif service["ServiceType"]["@Type"] == "Terminating":
+                elif service.type == "Terminating":
                     has_arrivals = True
-                elif service["ServiceType"]["@Type"] == "Through":
+                elif service.type == "Through":
                     has_arrivals = True
                     has_departures = True
         return render_template(
