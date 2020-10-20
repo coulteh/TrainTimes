@@ -50,7 +50,7 @@ class LiveStationData:
         elif service_type == "arr":
             return arrival_list
         else:
-            raise SyntaxError("service_type must be either \"dep\" or \"arr\".")
+            raise ValueError("service_type must be either \"dep\" or \"arr\".")
 
     def __init__(self, station_name):
         xml_data = self.__get_data(station_name)
@@ -134,6 +134,7 @@ class LiveStationData:
 
         def __init__(self, train):
             self.type = train["ServiceType"]["@Type"]
+            self.uid = train["@Uid"]
             self.origin = train["Origin1"]["@name"]
             self.destination = train["Destination1"]["@name"]
             self.arr_time = train["ArriveTime"]["@time"]

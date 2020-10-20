@@ -16,35 +16,58 @@ Departures - {{ station }}
     </ul>
     <div class="tab-content" id="departuresArrivalsTabContent">
         <div class="tab-pane fade show active" id="departures" role="tabpanel" aria-labelledby="departures-tab">
-            {% if stationdata.all_services == None %}
+            {% if stationdata.departures == None %}
                 <p>No trains are scheduled to depart from {{ station }} in the next 90 minutes.</p>
             {% else %}
-                {% include "_departures_table_head.html" %}
-                {% if "@Uid" in stationdata.services %}
-                {# 
-                    Got to account for Translink data stupidity, so if there's only one service...do this 
-                #}
-                {% set departure = stationdata.all_services %}
-                    {% if departure.ServiceType["@Type"] != "Terminating" %}
-                        {% include "_departures_table_body.html" %}
-                    {% endif %}
-                {% else %}
-                {# 
-                    As above - if there are multiple services (more likely) do this 
-                #}
-                {% for departure in stationdata.all_services %}
-                    {% if departure.ServiceType %}
-                        {% if departure.ServiceType["@Type"] != "Terminating" %}
-                            {% include "_departures_table_body.html" %}
-                        {% endif %}
-                    {% endif %}
+            <table class="table table-dark">
+                <thead>
+                    <th>Time</th>
+                    <th>Destination</th>
+                    <th>Expected Departure</th>
+                    <th>Platform</th>
+                    <th>Delay</th>
+                </thead>
+                {% for departure in stationdata.departures %}
+                    <tr>
+                        <td>{{ departure.dep_time }}</td>
+                        <td>{{ departure.destination }}</td>
+                        <td>{{ departure.exp_dep_time }}</td>
+                        <td>{{ departure.platform.number }}</td>
+                        <td>{{ departure.delay }} mins</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% set buttonuid = departure.uid ~ "button" %}
+                            Calling at: <input type="button" id={{ buttonuid }} class="button" onclick='hideElement("{{ departure.uid }}");showHideValue("{{ buttonuid }}")' value="Show"></input>
+                            <div id={{ departure.uid }} style="display: none;">
+                                <table>
+                                    <thead>
+                                        <th>Station</th>
+                                        <th>Time</th>
+                                    </thead>
+                                    {% for call_point in departure.calling_points %}
+                                    <tr>
+                                        <td>{{ call_point.station }}</td>
+                                        <td>{{ call_point.tt_arrival_time }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
                 {% endfor %}
-                {% endif %}
-                {% include "_departures_table_foot.html" %}
+                </table>
             {% endif %}
         </div>
         <div class="tab-pane fade" id="arrivals" role="tabpanel" aria-labelledby="arrivals-tab">
-            This feature has not been implemented yet.
+            {% if stationdata.arrivals == None %}
+                <p>No trains are scheduled to arrive at {{ station }} in the next 90 minutes.</p>
+            {% else %}
+                {# 
+                    do something else 
+                #}
+                <p>There are arrivals but I haven't written the code to handle it yet.</p>
+            {% endif %}
         </div>
     </div>
 
