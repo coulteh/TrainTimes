@@ -28,33 +28,28 @@ Departures - {{ station }}
                     <th>Delay</th>
                 </thead>
                 {% for departure in stationdata.departures %}
-                    <tr>
+                    <tr data-toggle="collapse" data-target="#{{ departure.uid }}" class="accordion-toggle">
                         <td>{{ departure.dep_time }}</td>
                         <td>{{ departure.destination }}</td>
                         <td>{{ departure.exp_dep_time }}</td>
                         <td>{{ departure.platform.number }}</td>
                         <td>{{ departure.delay }} mins</td>
                     </tr>
+                    {% for call_point in departure.calling_points %}
                     <tr>
-                        <td>
-                            {% set buttonuid = departure.uid ~ "button" %}
-                            Calling at: <input type="button" id={{ buttonuid }} class="button" onclick='hideElement("{{ departure.uid }}");showHideValue("{{ buttonuid }}")' value="Show"></input>
-                            <div id={{ departure.uid }} style="display: none;">
-                                <table>
-                                    <thead>
-                                        <th>Station</th>
-                                        <th>Time</th>
-                                    </thead>
-                                    {% for call_point in departure.calling_points %}
-                                    <tr>
-                                        <td>{{ call_point.station }}</td>
-                                        <td>{{ call_point.tt_arrival_time }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </table>
+                        <td class="hiddenRow">
+                            <div class="accordion-body collapse" id="{{ departure.uid }}">
+                                {{ call_point.tt_arrival_time }}
+                            </div>
+                        </td>
+                        <td colspan="4" class="hiddenRow">
+                            <div class="accordion-body collapse" id="{{ departure.uid }}">
+                                {{ call_point.station }}
                             </div>
                         </td>
                     </tr>
+                    {% endfor %}
+                    </div>
                 {% endfor %}
                 </table>
             {% endif %}

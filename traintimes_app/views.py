@@ -29,24 +29,10 @@ def station(station_name=None):
         return redirect(url_for("home"))
     else:
         stationdata = fetch_live_data(station_name)
-        if stationdata.all_services == None:
-            has_arrivals = False
-            has_departures = False
-        else:
-            for service in stationdata.all_services:
-                if service.type == "Originating":
-                    has_departures = True
-                elif service.type == "Terminating":
-                    has_arrivals = True
-                elif service.type == "Through":
-                    has_arrivals = True
-                    has_departures = True
         return render_template(
             "stations.html",
             station=station_name,
             stationdata=stationdata,
-            has_arrivals=has_arrivals,
-            has_departures=has_departures,
         )
 
 
